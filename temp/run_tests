@@ -33,3 +33,5 @@ if [ $num == 0 ]
 		cat test_results/error_summary | grep "differ" | cut -f4 -d" " | cut -f3 -d"/"
 		echo -e "${RED}See details of errors: ${NC}test_results/error_log"
 fi
+
+maxi
