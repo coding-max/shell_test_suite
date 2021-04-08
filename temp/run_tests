@@ -3,7 +3,7 @@
 # temp
 
 # set ./hsh with the path of your executable file
-gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+#gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -33,5 +33,3 @@ if [ $num == 0 ]
 		cat test_results/error_summary | grep "differ" | cut -f4 -d" " | cut -f3 -d"/"
 		echo -e "${RED}See details of errors: ${NC}test_results/error_log"
 fi
-
-maxi
