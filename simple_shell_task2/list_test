@@ -1,16 +1,3 @@
-"/bin/ls"
-" /bin/ls"
-"          /bin/ls"
-"/bin/pwd"
-   este no
-"/bin/pwd         "
-"     /bin/ls     "
-"todo bien?"
 /bin/ls
- /bin/ls
-          /bin/ls
-/bin/pwd
-/bin/pwd         
-     /bin/ls     
-  hola javi
-todo bien?
+     /bin/ls
+      /bin/pwd      
