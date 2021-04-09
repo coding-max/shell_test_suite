@@ -1,4 +1,17 @@
+
+ 
+/bin/ls
+ls
+/bin/ls -l
+ls -l
+ /bin/pwd
+ pwd
+     /bin/ls -la
+     ls -la
+     /bin/pwd   
+     pwd  
+echo "por que? no hay por que"
+cat assets/logo
+/bin/whoami
+whoami
 exit
-HOLA DIEGO
-        exit xdd
-:)
