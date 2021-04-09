@@ -1,0 +1,248 @@
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+BLUE='\033[0;36m'
+NC='\033[0m' # No Color
+
+function pause()
+{
+    read -s -n 1 #Pause
+}
+
+function fullread()
+{
+    local IFS='';
+    read -r $1;
+}
+
+
+####### LOGIN #######
+function check_id()
+{
+	if [ -d /tmp/shell_test_suit/ ]
+	then
+		rm -rf /tmp/shell_test_suit/
+	fi
+	mkdir /tmp/shell_test_suit/
+	git pull > /tmp/shell_test_suit/login
+	clear
+	echo "============================================="
+	echo -e "       Shell Test Suite -  ${BLUE}HOME${NC}        "
+	echo "============================================="
+	echo -e "Enter your Holberton ID or ${RED}x to exit${NC}"
+	read ID_HOLBERTON
+	RESULTADO=$(grep $ID_HOLBERTON hbtn_mvd_users)
+
+	if [ "$ID_HOLBERTON" = "x" ]
+	then
+		exit
+	fi
+
+	if [ -z "$RESULTADO" ]
+	then
+		echo "ID not found in test suite database"
+		echo "Press any key and try again"
+		pause
+		check_id
+	else
+		echo "---------------------------------------------"
+		echo -e "Logged in as: ${GREEN}$RESULTADO${NC}"
+		echo "Confirm: [y/n]"
+		echo "---------------------------------------------"
+		read CONFIRM_CHECK
+
+	case $CONFIRM_CHECK in
+	y)
+		menu
+		;;
+	n)
+		check_id
+		;;
+	x)
+		exit
+		;;
+	*)
+		echo -e "${RED}Option not recognized${NC}"
+		echo "Press any key and try again"
+		pause
+		check_id
+		;;
+	esac
+	fi
+}
+
+####### MENU #######
+function menu()
+{
+	clear
+	echo "============================================="
+	echo -e "       Shell Test Suite -  ${BLUE}MENU${NC}        "
+	echo "============================================="
+	echo "  1 - Run test suite"
+	echo "  2 - List test results"
+	echo "  3 - Add a new test"
+	echo "  4 - Exit"
+
+	read OP;
+	case $OP in
+	1)
+		#1 - Run test suite
+		;;
+	2)
+		#2 - List test results
+		list_test
+		;;
+	3)
+		#3 - Add a new test
+		add_test
+		;;
+	4)
+		if [ -s /tmp/shell_test_suit/logout ]
+		then
+			echo "---------------------------------------------"
+			echo -e "${BLUE}Session log:${NC}"
+			cat /tmp/shell_test_suit/logout
+		fi
+		exit
+		;;
+	*)
+		echo -e "${RED}Option not recognized${NC}"
+		echo "Press any key and try again"
+		pause
+		menu
+	;;
+    	esac
+}
+
+
+####### LIST #######
+#2 - List test results
+function list_test()
+{
+	list_test_menu
+	echo "---------------------------------------------"
+	echo -e "${BLUE}Current list of cases for task $N_VERSION:${NC}"
+
+	#List all functions
+	echo "$(cat -n simple_shell_task$N_VERSION/list_test)"
+	echo "---------------------------------------------"
+	echo -e "To delete a test enter ${RED}\"d #\"${NC}\n(repacing the ${RED}#${NC} char for the test number)\n"
+	echo "To return to the menu press any other key"
+	read IF_DELETE
+	OP_DEL=$(echo "$IF_DELETE" | cut -d' ' -f1)
+
+	if [ "$OP_DEL" = "d" ]
+	then
+		OP_DEL=$(echo "$IF_DELETE" | cut -d' ' -f2)
+		delete_test $OP_DEL
+	fi
+    	menu
+}
+function list_test_menu()
+{
+	clear
+	echo "============================================="
+	echo -e "        Test Suite -  ${BLUE}LIST TEST${NC}       "
+	echo "============================================="
+    	echo -e "Example list"
+	echo "---------------------------------------------"
+	echo " Mandatory tasks:"
+	echo " Task 2 - Simple shell 0.1"
+	echo " Task 3 - Simple shell 0.2"
+	echo " Task 4 - Simple shell 0.3"
+	echo " Task 5 - Simple shell 0.4"
+	echo "---------------------------------------------"
+
+	read N_VERSION
+	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5) ]]
+	then
+		echo -e "${RED}Option not recognized${NC}"
+		echo "Press any key and try again"
+		pause
+		list_test_menu
+	fi	
+}
+function delete_test()
+{
+	RAM=$(sed -i "$1d" simple_shell_task$N_VERSION/list_test)
+	list_test
+}
+
+
+####### ADD #######
+#3 - Add new test
+function add_test()
+{
+	add_test_menu
+	new_case
+
+	#Upload
+}
+function add_test_menu()
+{
+	clear
+	echo "============================================="
+	echo -e "        Test Suite -  ${BLUE}ADD TEST${NC}       "
+	echo "============================================="
+    	echo -e "Example add"
+	echo "---------------------------------------------"
+	echo " Mandatory tasks:"
+	echo " Task 2 - Simple shell 0.1"
+	echo " Task 3 - Simple shell 0.2"
+	echo " Task 4 - Simple shell 0.3"
+	echo " Task 5 - Simple shell 0.4"
+	echo "---------------------------------------------"
+
+	read N_VERSION
+	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5) ]]
+	then
+		echo -e "${RED}Option not recognized${NC}"
+		echo "Press any key and try again"
+		pause
+		add_test_menu
+	fi
+}
+function new_case()
+{
+	echo "---------------------------------------------"
+	echo -e " Type input for ${BLUE}task $N_VERSION ${NC}new test case:"
+	fullread NEW_TEST
+	if [[ ! -d "simple_shell_task$N_VERSION" ]]
+	then
+		$(mkdir simple_shell_task$N_VERSION)
+	fi
+	echo "\"$NEW_TEST\"" >> simple_shell_task$N_VERSION/list_test
+	echo -e "${GREEN}Test case added correctly${NC}"
+
+	echo "---------------------------------------------"
+	another_case
+}
+function another_case()
+{
+	echo -e "Add another case for ${BLUE}task $N_VERSION ${NC}? [y/n]"
+	read ANOTHER
+	case $ANOTHER in
+	y)
+		#run again
+		new_case
+		;;
+	n)
+		echo -e "${BLUE}Updating to github...${NC}"
+		git add ./simple_shell_task$N_VERSION
+		git status >> /tmp/shell_test_suit/logout
+		git commit -m "new cases from $ID_HOLBERTON"
+		git push >> /tmp/shell_test_suit/logout
+		echo "---------------------------------------------" >> /tmp/shell_test_suit/logout
+		echo "To return to the menu press any key"
+		pause
+		menu
+		;;
+	*)
+		echo -e "${RED}Option not recognized${NC}"
+		echo "Press any key and try again"
+		pause
+		another_case
+		;;
+	esac
+}
+
+check_id
