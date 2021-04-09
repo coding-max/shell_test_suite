@@ -26,10 +26,6 @@ check_id
 ####### LOGIN #######
 function check_id()
 {
-	echo "============================================="
-	echo " PULL..."
-	echo "============================================="
-	RAM=$(git pull)
 	clear
 	echo "============================================="
 	echo -e "       Shell Test Suite -  ${BLUE}HOME${NC}        "
@@ -80,6 +76,8 @@ function check_id()
 function menu()
 {
 	clear
+	menu_update
+	clear
 	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
 	echo "============================================="
 	echo -e "       Shell Test Suite -  ${BLUE}MENU${NC}        "
@@ -88,7 +86,6 @@ function menu()
 	echo "  2 - List current test cases"
 	echo "  3 - Add new test cases"
 	echo "  4 - Exit"
-
 	read OP;
 	case $OP in
 	1)
@@ -118,12 +115,28 @@ function menu()
 	;;
     	esac
 }
+function menu_update()
+{
+	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo "============================================="
+	echo -e "       Shell Test Suite -  ${BLUE}MENU${NC}        "
+	echo "============================================="
+	echo -e " Updating test suite..."
+	RAM=$(git pull origin main)
+	clear
+	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo "============================================="
+	echo -e "       Shell Test Suite -  ${BLUE}MENU${NC}        "
+	echo "============================================="
+	echo -e " ${GREEN}Files updated${NC}"
+	echo " Press any key to open de menu"
+	pause
+}
 
 
 ####### RUN #######
 run_test()
 {
-	git pull > /tmp/shell_test_suit/login
 	rm -rf simple_shell_task$N_VERSION/diff
 	run_test_menu
 	echo "---------------------------------------------"
@@ -207,7 +220,6 @@ function run_test_menu()
 #2 - List test results
 function list_test()
 {
-	git pull > /tmp/shell_test_suit/login
 	list_test_menu
 	echo "---------------------------------------------"
 	echo -e "${BLUE}Current list of cases for task $N_VERSION:${NC}"
@@ -272,7 +284,6 @@ function delete_test()
 #3 - Add new test
 function add_test()
 {
-	git pull > /tmp/shell_test_suit/login
 	add_test_menu
 	new_case
 
