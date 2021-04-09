@@ -280,8 +280,7 @@ function delete_test()
 	RAM=$(git status)
 	RAM=$(git commit -m "new cases from $ID_HOLBERTON (auto-push)")
 	RAM=$(git push origin main)
-	echo -e "${BLUE}Updating to github...${NC}"
-	echo "To return to the menu press any key"
+	echo -e "${BLUE}To return to the menu press any key${NC}"
 	pause
 	menu
 }
@@ -380,7 +379,7 @@ function another_case()
 		RAM=$(git status)
 		RAM=$(git commit -m "new cases from $ID_HOLBERTON (auto-push)")
 		RAM=$(git push origin main)
-		echo "To return to the menu press any key"
+		echo -e "${BLUE}To return to the menu press any key${NC}"
 		pause
 		menu
 		;;
