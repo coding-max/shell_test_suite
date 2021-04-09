@@ -26,12 +26,10 @@ check_id
 ####### LOGIN #######
 function check_id()
 {
-	if [ -d /tmp/shell_test_suit/ ]
-	then
-		rm -rf /tmp/shell_test_suit/
-	fi
-	mkdir /tmp/shell_test_suit/
-	git pull > /tmp/shell_test_suit/login
+	echo "============================================="
+	echo " PULL..."
+	echo "============================================="
+	RAM=$(git pull)
 	clear
 	echo "============================================="
 	echo -e "       Shell Test Suite -  ${BLUE}HOME${NC}        "
@@ -126,6 +124,7 @@ function menu()
 run_test()
 {
 	git pull > /tmp/shell_test_suit/login
+	rm -rf simple_shell_task$N_VERSION/diff
 	run_test_menu
 	echo "---------------------------------------------"
 	echo -e "${BLUE}Running test cases for task $N_VERSION:${NC}"
@@ -144,16 +143,37 @@ run_test()
 		$(mkdir simple_shell_task$N_VERSION/diff)
 	fi
 	i=1
+	/=0
+	error_n=0
 	while [ $i -le $N ]
 	do
 		#TODO- not working yet
 		command=$(awk "NR == $i" ./simple_shell_task$N_VERSION/list_test)
-		"$command" > simple_shell_task$N_VERSION/expected/test$i
-		echo "$command" | ./hsh > simple_shell_task$N_VERSION/obtained/test$i
-		sdiff simple_shell_task$N_VERSION/obtained/test$i simple_shell_task$N_VERSION/expected/test$i > simple_shell_task$N_VERSION/diff/test$i
+		RAM=$($command > simple_shell_task$N_VERSION/expected/test$i)
+		RAM=$(echo "$command" | ./hsh > simple_shell_task$N_VERSION/obtained/test$i)
+		RESULT=$(diff simple_shell_task$N_VERSION/obtained/test$i simple_shell_task$N_VERSION/expected/test$i)
+		if [ "$RESULT" = "" ]
+		then
+			echo -e "$i - [${GREEN}OK${NC}]      \"$command\""
+			((ok_n++))
+		else
+			echo -e "$i - [${RED}Fail${NC}]    \"$command\""
+			sdiff simple_shell_task$N_VERSION/obtained/test$i simple_shell_task$N_VERSION/expected/test$i > simple_shell_task$N_VERSION/diff/test$i 
+			((error_n++))
+		fi
 	((i++))
 	done
-	echo "$N test executed"
+	echo "---------------------------------------------"
+	echo "$ok_n / $N - Correctos"
+	echo "$error_n Errors detected"
+	echo "---------------------------------------------"
+
+	rm -rf simple_shell_task$N_VERSION/obtained
+	rm -rf simple_shell_task$N_VERSION/expected
+	
+	echo "Press any key and try again"
+	pause
+	menu
 }
 function run_test_menu()
 {
@@ -238,7 +258,7 @@ function delete_test()
 {
 	RAM=$(sed -i "$1d" simple_shell_task$N_VERSION/list_test)
 	echo -e "${BLUE}Updating to github...${NC}"
-	git add ./simple_shell_task$N_VERSION >> /tmp/shell_test_suit/logout
+	git add ./simple_shell_task$N_VERSION/list_test >> /tmp/shell_test_suit/logout
 	git status >> /tmp/shell_test_suit/logout
 	git commit -m "deleted one from $ID_HOLBERTON (auto-push)" >> /tmp/shell_test_suit/logout
 	git push >> /tmp/shell_test_suit/logout
@@ -322,7 +342,7 @@ function new_case()
 	then
 		$(mkdir simple_shell_task$N_VERSION)
 	fi
-	echo "\"$NEW_TEST\"" >> simple_shell_task$N_VERSION/list_test
+	echo "$NEW_TEST" >> simple_shell_task$N_VERSION/list_test
 	echo -e "${GREEN}Test case added correctly${NC}"
 
 	echo "---------------------------------------------"
@@ -339,7 +359,7 @@ function another_case()
 		;;
 	n)
 		echo -e "${BLUE}Updating to github...${NC}"
-		git add ./simple_shell_task$N_VERSION >> /tmp/shell_test_suit/logout
+		git add ./simple_shell_task$N_VERSION/list_test >> /tmp/shell_test_suit/logout
 		git status >> /tmp/shell_test_suit/logout
 		git commit -m "new cases from $ID_HOLBERTON (auto-push)" >> /tmp/shell_test_suit/logout
 		git push >> /tmp/shell_test_suit/logout
