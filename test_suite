@@ -32,14 +32,14 @@ function check_id()
 	echo "============================================="
 	echo -e "Enter your Holberton ID or ${RED}x to exit${NC}"
 	read ID_HOLBERTON
-	RESULTADO=$(grep $ID_HOLBERTON assets/hbtn_mvd_users)
+    RESULT=$(grep $ID_HOLBERTON assets/hbtn_mvd_users)
 
 	if [ "$ID_HOLBERTON" = "x" ]
 	then
 		exit
 	fi
 
-	if [ -z "$RESULTADO" ]
+	if [ -z "RESULT" ]
 	then
 		echo "ID not found in test suite database"
 		echo "Press any key and try again"
@@ -47,7 +47,7 @@ function check_id()
 		check_id
 	else
 		echo "---------------------------------------------"
-		echo -e "Logged in as: ${GREEN}$RESULTADO${NC}"
+		echo -e "Logged in as: ${GREEN}$RESULT${NC}"
 		echo "Confirm: [y/n]"
 		echo "---------------------------------------------"
 		read CONFIRM_CHECK
@@ -78,7 +78,7 @@ function menu()
 	clear
 	menu_update
 	clear
-	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo -e " Logged in as: ${GREEN}RESULT${NC}"
 	echo "============================================="
 	echo -e "       Shell Test Suite -  ${BLUE}MENU${NC}        "
 	echo "============================================="
@@ -117,14 +117,14 @@ function menu()
 }
 function menu_update()
 {
-	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo -e " Logged in as: ${GREEN}RESULT${NC}"
 	echo "============================================="
 	echo -e "       Shell Test Suite -  ${BLUE}MENU${NC}        "
 	echo "============================================="
 	echo -e " Updating test suite..."
 	RAM=$(git pull origin main)
 	clear
-	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo -e " Logged in as: ${GREEN}RESULT${NC}"
 	echo "============================================="
 	echo -e "       Shell Test Suite -  ${BLUE}MENU${NC}        "
 	echo "============================================="
@@ -177,7 +177,7 @@ run_test()
 	((i++))
 	done
 	echo "---------------------------------------------"
-	echo "$ok_n / $N - Correctos"
+	echo "$ok_n / $N - Correct"
 	echo "$error_n Errors detected"
 	echo "---------------------------------------------"
 
@@ -197,11 +197,11 @@ run_test()
 function run_test_menu()
 {
 	clear
-	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo -e " Logged in as: ${GREEN}RESULT${NC}"
 	echo "============================================="
 	echo -e "        Test Suite -  ${BLUE}RUN TEST${NC}       "
 	echo "============================================="
-    	echo " Select the version of simple shell to which"
+    	echo " Select the version of the simple shell to which"
 	echo " you want to run the list of current cases"
 	echo " Exmaple: to run all task 2 tests - press 2"
 	echo "---------------------------------------------"
@@ -210,10 +210,11 @@ function run_test_menu()
 	echo " Task 3 - Simple shell 0.2"
 	echo " Task 4 - Simple shell 0.3"
 	echo " Task 5 - Simple shell 0.4"
+	echo " Task 6 - Simple shell 1.0"
 	echo "---------------------------------------------"
 
 	read N_VERSION
-	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5) ]]
+	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5 || "$N_VERSION" -eq 6) ]]
 	then
 		echo -e "${RED}Option not recognized${NC}"
 		echo "Press any key and try again"
@@ -248,7 +249,7 @@ function list_test()
 function list_test_menu()
 {
 	clear
-	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo -e " Logged in as: ${GREEN}RESULT${NC}"
 	echo "============================================="
 	echo -e "        Test Suite -  ${BLUE}LIST TEST${NC}       "
 	echo "============================================="
@@ -261,10 +262,11 @@ function list_test_menu()
 	echo " Task 3 - Simple shell 0.2"
 	echo " Task 4 - Simple shell 0.3"
 	echo " Task 5 - Simple shell 0.4"
+	echo " Task 6 - Simple shell 1.0"
 	echo "---------------------------------------------"
 
 	read N_VERSION
-	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5) ]]
+	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5 || "$N_VERSION" -eq 6) ]]
 	then
 		echo -e "${RED}Option not recognized${NC}"
 		echo "Press any key and try again"
@@ -298,7 +300,7 @@ function add_test()
 function add_test_menu()
 {
 	clear
-	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo -e " Logged in as: ${GREEN}RESULT${NC}"
 	echo "============================================="
 	echo -e "        Test Suite -  ${BLUE}ADD TEST${NC}       "
 	echo "============================================="
@@ -311,10 +313,11 @@ function add_test_menu()
 	echo " Task 3 - Simple shell 0.2"
 	echo " Task 4 - Simple shell 0.3"
 	echo " Task 5 - Simple shell 0.4"
+	echo " Task 6 - Simple shell 1.0"
 	echo "---------------------------------------------"
 
 	read N_VERSION
-	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5) ]]
+	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5 || "$N_VERSION" -eq 6) ]]
 	then
 		echo -e "${RED}Option not recognized${NC}"
 		echo "Press any key and try again"
@@ -325,26 +328,32 @@ function add_test_menu()
 	case $N_VERSION in
 	2)
 		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
-		echo " tailored to the task requirements"
-		echo " make sure you comply with them before"
+		echo " in compliance with the task requirements"
+		echo " make sure you meet those before"
 		echo " writing the new case"
 		;;
 	3)
 		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
-		echo " tailored to the task requirements"
-		echo " make sure you comply with them before"
+		echo " in compliance with the task requirements"
+		echo " make sure you meet those before"
 		echo " writing the new case"
 		;;
 	4)
 		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
-		echo " tailored to the task requirements"
-		echo " make sure you comply with them before"
+		echo " in compliance with the task requirements"
+		echo " make sure you meet those before"
 		echo " writing the new case"
 		;;
 	5)
 		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
-		echo " tailored to the task requirements"
-		echo " make sure you comply with them before"
+		echo " in compliance with the task requirements"
+		echo " make sure you meet those before"
+		echo " writing the new case"
+		;;
+	6)
+		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
+		echo " in compliance with the task requirements"
+		echo " make sure you meet those before"
 		echo " writing the new case"
 		;;
     	esac
