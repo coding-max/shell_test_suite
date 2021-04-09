@@ -5,6 +5,6 @@
  /bin/pwd
      /bin/ls -la
      /bin/pwd     
-echo "por que? no hay por que"
-cat assets/logo
+/usr/bin/echo "por que? no hay por que"
+/bin/cat assets/logo
 /bin/whoami
