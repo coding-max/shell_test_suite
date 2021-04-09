@@ -109,8 +109,6 @@ function menu()
 		if [ -s /tmp/shell_test_suit/logout ]
 		then
 			echo "---------------------------------------------"
-			echo -e "${BLUE}Session log:${NC}"
-			cat /tmp/shell_test_suit/logout
 		fi
 		exit
 		;;
@@ -239,7 +237,15 @@ function list_test_menu()
 function delete_test()
 {
 	RAM=$(sed -i "$1d" simple_shell_task$N_VERSION/list_test)
-	list_test
+	echo -e "${BLUE}Updating to github...${NC}"
+	git add ./simple_shell_task$N_VERSION >> /tmp/shell_test_suit/logout
+	git status >> /tmp/shell_test_suit/logout
+	git commit -m "deleted one from $ID_HOLBERTON (auto-push)" >> /tmp/shell_test_suit/logout
+	git push >> /tmp/shell_test_suit/logout
+	echo "---------------------------------------------" >> /tmp/shell_test_suit/logout
+	echo "To return to the menu press any key"
+	pause
+	menu
 }
 
 
@@ -335,7 +341,7 @@ function another_case()
 		echo -e "${BLUE}Updating to github...${NC}"
 		git add ./simple_shell_task$N_VERSION >> /tmp/shell_test_suit/logout
 		git status >> /tmp/shell_test_suit/logout
-		git commit -m "new cases from $ID_HOLBERTON" >> /tmp/shell_test_suit/logout
+		git commit -m "new cases from $ID_HOLBERTON (auto-push)" >> /tmp/shell_test_suit/logout
 		git push >> /tmp/shell_test_suit/logout
 		echo "---------------------------------------------" >> /tmp/shell_test_suit/logout
 		echo "To return to the menu press any key"
