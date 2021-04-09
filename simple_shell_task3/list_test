@@ -7,3 +7,4 @@
      /bin/pwd     
 /usr/bin/echo "por que? no hay por que"
 /bin/cat assets/logo
+/usr/bin/whoami
