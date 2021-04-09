@@ -143,7 +143,7 @@ run_test()
 		$(mkdir simple_shell_task$N_VERSION/diff)
 	fi
 	i=1
-	/=0
+	ok_n=0
 	error_n=0
 	while [ $i -le $N ]
 	do
@@ -258,10 +258,10 @@ function delete_test()
 {
 	RAM=$(sed -i "$1d" simple_shell_task$N_VERSION/list_test)
 	echo -e "${BLUE}Updating to github...${NC}"
-	git add ./simple_shell_task$N_VERSION/list_test >> /tmp/shell_test_suit/logout
-	git status >> /tmp/shell_test_suit/logout
-	git commit -m "deleted one from $ID_HOLBERTON (auto-push)" >> /tmp/shell_test_suit/logout
-	git push >> /tmp/shell_test_suit/logout
+	RAM=$(git add ./simple_shell_task$N_VERSION/list_test)
+	RAM=$(git status)
+	RAM=$(git commit -m "new cases from $ID_HOLBERTON (auto-push)")
+	RAM=$(git push)
 	echo "---------------------------------------------" >> /tmp/shell_test_suit/logout
 	echo "To return to the menu press any key"
 	pause
@@ -359,10 +359,10 @@ function another_case()
 		;;
 	n)
 		echo -e "${BLUE}Updating to github...${NC}"
-		git add ./simple_shell_task$N_VERSION/list_test >> /tmp/shell_test_suit/logout
-		git status >> /tmp/shell_test_suit/logout
-		git commit -m "new cases from $ID_HOLBERTON (auto-push)" >> /tmp/shell_test_suit/logout
-		git push >> /tmp/shell_test_suit/logout
+		RAM=$(git add ./simple_shell_task$N_VERSION/list_test)
+		RAM=$(git status)
+		RAM=$(git commit -m "new cases from $ID_HOLBERTON (auto-push)")
+		RAM=$(git push)
 		echo "---------------------------------------------" >> /tmp/shell_test_suit/logout
 		echo "To return to the menu press any key"
 		pause
