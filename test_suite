@@ -149,8 +149,8 @@ run_test()
 	do
 		#TODO- not working yet
 		command=$(awk "NR == $i" ./simple_shell_task$N_VERSION/list_test)
-		RAM=$($command > simple_shell_task$N_VERSION/expected/test$i)
-		RAM=$(echo "$command" | ./hsh > simple_shell_task$N_VERSION/obtained/test$i)
+		RAM=$($command > simple_shell_task$N_VERSION/expected/test$i 2>&1)
+		RAM=$(echo "$command" | ./hsh > simple_shell_task$N_VERSION/obtained/test$i 2>&1)
 		RESULT=$(diff simple_shell_task$N_VERSION/obtained/test$i simple_shell_task$N_VERSION/expected/test$i)
 		if [ "$RESULT" = "" ]
 		then
@@ -158,7 +158,7 @@ run_test()
 			((ok_n++))
 		else
 			echo -e "$i - [${RED}Fail${NC}]    \"$command\""
-			sdiff simple_shell_task$N_VERSION/obtained/test$i simple_shell_task$N_VERSION/expected/test$i > simple_shell_task$N_VERSION/diff/test$i 
+			RAM=$(sdiff simple_shell_task$N_VERSION/obtained/test$i simple_shell_task$N_VERSION/expected/test$i > simple_shell_task$N_VERSION/diff/test$i 2>&1)
 			((error_n++))
 		fi
 	((i++))
