@@ -1,7 +1,0 @@
-total 48
-drwxr-xr-x 2 pxnmatz pxnmatz  4096 Apr  9 01:42 assets
--rw-r--r-- 1 pxnmatz pxnmatz   448 Apr  9 01:42 hbtn_mvd_users
--rwxr-xr-x 1 pxnmatz pxnmatz 22312 Apr  9 11:07 hsh
--rw-r--r-- 1 pxnmatz pxnmatz     0 Apr  9 11:22 null
-drwxr-xr-x 5 pxnmatz pxnmatz  4096 Apr  9 11:24 simple_shell_task2
--rwxr-xr-x 1 pxnmatz pxnmatz  9523 Apr  9 11:26 test_suite
