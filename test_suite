@@ -261,8 +261,7 @@ function delete_test()
 	RAM=$(git add ./simple_shell_task$N_VERSION/list_test)
 	RAM=$(git status)
 	RAM=$(git commit -m "new cases from $ID_HOLBERTON (auto-push)")
-	RAM=$(git push)
-	echo "---------------------------------------------" >> /tmp/shell_test_suit/logout
+	RAM=$(git push origin main)
 	echo "To return to the menu press any key"
 	pause
 	menu
@@ -362,8 +361,7 @@ function another_case()
 		RAM=$(git add ./simple_shell_task$N_VERSION/list_test)
 		RAM=$(git status)
 		RAM=$(git commit -m "new cases from $ID_HOLBERTON (auto-push)")
-		RAM=$(git push)
-		echo "---------------------------------------------" >> /tmp/shell_test_suit/logout
+		RAM=$(git push origin main)
 		echo "To return to the menu press any key"
 		pause
 		menu
