@@ -227,9 +227,9 @@ function another_case()
 		;;
 	n)
 		echo -e "${BLUE}Updating to github...${NC}"
-		git add ./simple_shell_task$N_VERSION
+		git add ./simple_shell_task$N_VERSION >> /tmp/shell_test_suit/logout
 		git status >> /tmp/shell_test_suit/logout
-		git commit -m "new cases from $ID_HOLBERTON"
+		git commit -m "new cases from $ID_HOLBERTON" >> /tmp/shell_test_suit/logout
 		git push >> /tmp/shell_test_suit/logout
 		echo "---------------------------------------------" >> /tmp/shell_test_suit/logout
 		echo "To return to the menu press any key"
