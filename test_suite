@@ -183,10 +183,16 @@ run_test()
 
 	rm -rf simple_shell_task$N_VERSION/obtained
 	rm -rf simple_shell_task$N_VERSION/expected
-	
-	echo "Press any key and try again"
-	pause
-	menu
+
+	echo -e "Press ${RED}x to exit${NC}"
+	echo "To return to the menu press any other key"
+	read IDK
+	if [ "$IDK" = "x" ]
+	then
+		exit
+	else
+		menu
+	fi
 }
 function run_test_menu()
 {
@@ -274,6 +280,7 @@ function delete_test()
 	RAM=$(git status)
 	RAM=$(git commit -m "new cases from $ID_HOLBERTON (auto-push)")
 	RAM=$(git push origin main)
+	echo -e "${BLUE}Updating to github...${NC}"
 	echo "To return to the menu press any key"
 	pause
 	menu
