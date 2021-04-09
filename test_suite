@@ -1,6 +1,7 @@
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 BLUE='\033[0;36m'
+YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 function pause()
@@ -12,6 +13,13 @@ function fullread()
 {
     local IFS='';
     read -r $1;
+}
+
+function start()
+{
+#cat assets/logo
+#pause
+check_id
 }
 
 
@@ -30,7 +38,7 @@ function check_id()
 	echo "============================================="
 	echo -e "Enter your Holberton ID or ${RED}x to exit${NC}"
 	read ID_HOLBERTON
-	RESULTADO=$(grep $ID_HOLBERTON hbtn_mvd_users)
+	RESULTADO=$(grep $ID_HOLBERTON assets/hbtn_mvd_users)
 
 	if [ "$ID_HOLBERTON" = "x" ]
 	then
@@ -74,18 +82,20 @@ function check_id()
 function menu()
 {
 	clear
+	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
 	echo "============================================="
 	echo -e "       Shell Test Suite -  ${BLUE}MENU${NC}        "
 	echo "============================================="
 	echo "  1 - Run test suite"
-	echo "  2 - List test results"
-	echo "  3 - Add a new test"
+	echo "  2 - List current test cases"
+	echo "  3 - Add new test cases"
 	echo "  4 - Exit"
 
 	read OP;
 	case $OP in
 	1)
 		#1 - Run test suite
+		run_test
 		;;
 	2)
 		#2 - List test results
@@ -114,10 +124,72 @@ function menu()
 }
 
 
+####### RUN #######
+run_test()
+{
+	git pull > /tmp/shell_test_suit/login
+	run_test_menu
+	echo "---------------------------------------------"
+	echo -e "${BLUE}Running test cases for task $N_VERSION:${NC}"
+	#obtener numero de casos y cargarlos en $N
+	N=$(wc -l ./simple_shell_task$N_VERSION/list_test | cut -f1 -d" ")
+	if [[ ! -d "simple_shell_task$N_VERSION/expected" ]]
+	then
+		$(mkdir simple_shell_task$N_VERSION/expected)
+	fi
+	if [[ ! -d "simple_shell_task$N_VERSION/obtained" ]]
+	then
+		$(mkdir simple_shell_task$N_VERSION/obtained)
+	fi
+	if [[ ! -d "simple_shell_task$N_VERSION/diff" ]]
+	then
+		$(mkdir simple_shell_task$N_VERSION/diff)
+	fi
+	i=1
+	while [ $i -le $N ]
+	do
+		#TODO- not working yet
+		command=$(awk "NR == $i" ./simple_shell_task$N_VERSION/list_test)
+		"$command" > simple_shell_task$N_VERSION/expected/test$i
+		echo "$command" | ./hsh > simple_shell_task$N_VERSION/obtained/test$i
+		sdiff simple_shell_task$N_VERSION/obtained/test$i simple_shell_task$N_VERSION/expected/test$i > simple_shell_task$N_VERSION/diff/test$i
+	((i++))
+	done
+	echo "$N test executed"
+}
+function run_test_menu()
+{
+	clear
+	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
+	echo "============================================="
+	echo -e "        Test Suite -  ${BLUE}RUN TEST${NC}       "
+	echo "============================================="
+    	echo " Select the version of simple shell to which"
+	echo " you want to run the list of current cases"
+	echo " Exmaple: to run all task 2 tests - press 2"
+	echo "---------------------------------------------"
+	echo " Mandatory tasks:"
+	echo " Task 2 - Simple shell 0.1"
+	echo " Task 3 - Simple shell 0.2"
+	echo " Task 4 - Simple shell 0.3"
+	echo " Task 5 - Simple shell 0.4"
+	echo "---------------------------------------------"
+
+	read N_VERSION
+	if [[ ! ("$N_VERSION" -eq 2 || "$N_VERSION" -eq 3 || "$N_VERSION" -eq 4 || "$N_VERSION" -eq 5) ]]
+	then
+		echo -e "${RED}Option not recognized${NC}"
+		echo "Press any key and try again"
+		pause
+		run_test_menu
+	fi	
+}
+
 ####### LIST #######
 #2 - List test results
 function list_test()
 {
+	git pull > /tmp/shell_test_suit/login
 	list_test_menu
 	echo "---------------------------------------------"
 	echo -e "${BLUE}Current list of cases for task $N_VERSION:${NC}"
@@ -140,10 +212,13 @@ function list_test()
 function list_test_menu()
 {
 	clear
+	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
 	echo "============================================="
 	echo -e "        Test Suite -  ${BLUE}LIST TEST${NC}       "
 	echo "============================================="
-    	echo -e "Example list"
+    	echo " Select the version of simple shell to which"
+	echo " you want to display the list of current cases"
+	echo " Exmaple: to diplay task 2 list - press 2"
 	echo "---------------------------------------------"
 	echo " Mandatory tasks:"
 	echo " Task 2 - Simple shell 0.1"
@@ -172,6 +247,7 @@ function delete_test()
 #3 - Add new test
 function add_test()
 {
+	git pull > /tmp/shell_test_suit/login
 	add_test_menu
 	new_case
 
@@ -180,10 +256,13 @@ function add_test()
 function add_test_menu()
 {
 	clear
+	echo -e " Logged in as: ${GREEN}$RESULTADO${NC}"
 	echo "============================================="
 	echo -e "        Test Suite -  ${BLUE}ADD TEST${NC}       "
 	echo "============================================="
-    	echo -e "Example add"
+    	echo " Select the version of simple shell to which"
+	echo " you want to add a new test case"
+	echo " Exmaple: to add to task 2 list - press 2"
 	echo "---------------------------------------------"
 	echo " Mandatory tasks:"
 	echo " Task 2 - Simple shell 0.1"
@@ -200,6 +279,33 @@ function add_test_menu()
 		pause
 		add_test_menu
 	fi
+	echo "---------------------------------------------"
+	case $N_VERSION in
+	2)
+		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
+		echo " tailored to the task requirements"
+		echo " make sure you comply with them before"
+		echo " writing the new case"
+		;;
+	3)
+		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
+		echo " tailored to the task requirements"
+		echo " make sure you comply with them before"
+		echo " writing the new case"
+		;;
+	4)
+		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
+		echo " tailored to the task requirements"
+		echo " make sure you comply with them before"
+		echo " writing the new case"
+		;;
+	5)
+		echo -e "${YELLOW} Caution${NC}: the test case you enter must be"
+		echo " tailored to the task requirements"
+		echo " make sure you comply with them before"
+		echo " writing the new case"
+		;;
+    	esac
 }
 function new_case()
 {
@@ -245,4 +351,4 @@ function another_case()
 	esac
 }
 
-check_id
+start
