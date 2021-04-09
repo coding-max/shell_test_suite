@@ -1,2 +1,10 @@
-    /bin/ls -la
 
+ 
+/bin/ls
+/bin/ls -l
+ /bin/pwd
+     /bin/ls -la
+     /bin/pwd     
+echo "por que? no hay por que"
+cat assets/logo
+/bin/whoami
