@@ -14,5 +14,4 @@ echo "por que? no hay por que"
 cat assets/logo
 /bin/whoami
 whoami
-env
      env
