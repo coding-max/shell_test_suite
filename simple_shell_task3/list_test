@@ -7,3 +7,4 @@
      /bin/pwd     
 /bin/cat assets/logo
 /usr/bin/whoami
+/bin/echo "el que puso el caso de prueba anterior tenia mal la ruta"
