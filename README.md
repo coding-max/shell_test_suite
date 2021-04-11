@@ -1,5 +1,7 @@
 # Simple Shell Test Suite
 
+![markdown poster by Jorge Tuset](./assets/CHECKER.jpg)
+
 > Please, in order to avoid any conflicts **DO NOT edit** any files from this repository neither on Github nor on your local repository, with the exception of "AUTHORS".  
 > If you wish to modify the list of test cases, run the script and follow the instructions, the list will be automatically synchronized.  
 > **You must never do a manual push** in order to avoid uploading run files or test results.  
