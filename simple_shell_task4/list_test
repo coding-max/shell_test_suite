@@ -17,3 +17,5 @@ whoami
 ls -lahs
 /usr/bin/whoami
 ls -l              -a
+ls    -a -l
+ls -a -l /bin
