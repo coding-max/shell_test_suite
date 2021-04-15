@@ -4,4 +4,3 @@
  /bin/pwd
      /bin/pwd
 /bin/pwd     
-ls -l -a --color=auto
