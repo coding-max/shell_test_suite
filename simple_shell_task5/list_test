@@ -15,3 +15,5 @@ cat assets/logo
 /bin/whoami
 whoami
 	 exit
+ls -lah \n exit
+    exit           
