@@ -19,3 +19,6 @@ ls -lahs
 ls -l              -a
 ls    -a -l
 ls -a -l /bin
+ls -al
+
+ls -la
