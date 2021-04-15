@@ -21,3 +21,4 @@ ls    -a -l
 ls -a -l /bin
 ls -al
 
+ls -la
